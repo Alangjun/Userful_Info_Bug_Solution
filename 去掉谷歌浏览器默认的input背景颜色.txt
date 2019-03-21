@@ -1,0 +1,3 @@
+ input:-webkit-autofill{  // È¥µô¹È¸èä¯ÀÀÆ÷Ä¬ÈÏµÄinput±³¾°ÑÕÉ«  https://www.cnblogs.com/yehx/p/5687676.html
+          -webkit-box-shadow: 0 0 0px 1000px white inset;
+        }

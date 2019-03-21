@@ -1,0 +1,28 @@
+
+引用jquery及lazyload插件
+  <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery.lazyload.min.js" type="text/javascript"></script>
+
+html图片调用方法
+
+为图片加入样式lazy  图片路径引用方法用data-original
+<img class="lazy" data-original="img/bmw_m1_hood.jpg">
+<img class="lazy" data-original="img/bmw_m1_side.jpg">
+<img class="lazy" data-original="img/viper_1.jpg">
+<img class="lazy" data-original="img/viper_corner.jpg">
+<img class="lazy" data-original="img/bmw_m3_gt.jpg">
+<img class="lazy" data-original="img/corvette_pitstop.jpg">
+
+js出始化lazyload并设置图片显示方式
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+      $("img.lazy").lazyload({effect: "fadeIn"});
+  });
+</script>
+
+在图片中也可以不使用 class="lazy"，初始化时使用：
+$("img").lazyload({effect: "fadeIn"});
+这样就可以对全局的图片都有效！
+
+
+相关地址：http://www.jq22.com/jquery-info390

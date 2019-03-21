@@ -1,0 +1,14 @@
+用编辑器创建一个server.js文件，输入以下代码
+
+var http = require('http');
+http.createServer(function(req,res){
+	res.writeHead(200,{'Content-Type':'text/plain'});
+	res.end('Hello World');
+}).listen(3000,'127.0.0.1');
+
+在命令行中运行server.js，进行服务器的搭建；
+输入node server.js
+在浏览器中输入http://127.0.0.1:3000/即可
+
+参考链接：
+https://jingyan.baidu.com/article/495ba841b2a6e638b30eded9.html

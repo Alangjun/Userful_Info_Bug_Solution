@@ -1,0 +1,23 @@
+不能在main.js中引入，必须在用的变量的vue文件中引入
+
+<style  lang="scss">
+  $color-danger: #FF4949;  // scss变量
+  $color: green;   //// scss变量
+
+或者这样引入样式：
+@import "../assets/scss/base.scss";
+
+  #test{
+    padding: 50px;
+    height: 100%;
+  
+    .sass{
+      background-color: $color-danger;
+      color: $color;
+    }
+
+
+
+
+  }
+</style>
