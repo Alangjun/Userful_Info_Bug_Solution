@@ -1,0 +1,15 @@
+ 
+
+ handleTabClick(tab, event){  // 解决页面初始化后点击非当前tab里的 echart 初始化时图标不能撑开的问题
+            if(tab.name == 'activeDevice'){
+                setTimeout(()=>{
+                    this.deviceActiveEcharts.resize()
+                },100)
+            }
+        },
+
+
+参考开发者中心项目
+
+coding上的地址为：https://coding.net/u/Alangjun/p/devCenter_static/git/blob/master/src/components/product/statis.vue
+

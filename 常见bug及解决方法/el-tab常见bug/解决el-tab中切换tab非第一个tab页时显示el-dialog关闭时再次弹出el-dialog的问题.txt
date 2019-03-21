@@ -1,0 +1,25 @@
+先移除dialog的dom，再添加即可
+
+ <el-dialog
+              title="活跃设备明细"
+              :visible.sync="activeDialog"
+              width="60%"
+              @close="dialogClose('activeDetailPageInfo')"
+              v-if="activeDialogShow"
+      ></dialog>
+
+
+ dialogClose(pageInfo){
+          if(pageInfo=='activeDetailPageInfo'){   // 解决el-tab中切换tab非第一个tab页时显示el-dialog，关闭时再次弹出el-dialog的问题
+                this.activeDialogShow = false
+                setTimeout(()=>{
+                    this.activeDialogShow = true
+                }, 50)
+            }
+
+        },
+
+
+参考开发者中心项目
+
+coding上的地址为：https://coding.net/u/Alangjun/p/devCenter_static/git/blob/master/src/components/product/statis.vue

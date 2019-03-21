@@ -1,0 +1,22 @@
+在mouted钩子函数里设置延迟
+
+mounted(){
+        this.deviceLine();
+        this.deviceActiveLine();
+
+        let _this = this
+        window.onresize = function () {
+            _this.deviceEcharts.resize() // 注意这里不能直接使用 this，因为这里的 this 指向windows对象，而不是Vue对象
+            _this.deviceActiveEcharts.resize()
+        }
+        setTimeout(()=>{  // 解决el-tab标签页里引入 echart 初始化时图标不能撑开的问题
+            this.deviceEcharts.resize()
+        },100)
+
+
+    },
+
+
+参考开发者中心项目
+
+coding上的地址为：https://coding.net/u/Alangjun/p/devCenter_static/git/blob/master/src/components/product/statis.vue

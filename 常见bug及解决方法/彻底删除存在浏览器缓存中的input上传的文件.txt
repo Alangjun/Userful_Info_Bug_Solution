@@ -1,0 +1,8 @@
+<el-button @click="selectFile" v-if="!isFile" size="small">点击添加文件</el-button>
+<el-button type="warning" size="small" @click="delFile" v-else>删除</el-button>
+<input type="file" id="firmware" v-if="isHaveInput" style="display: none" @change="selected">
+setTimeout(()=>{ //   50毫秒后再添加DOM 用于下次上传文件
+     this.isHaveInput = true
+ },50)
+
+通过设置v-if绑定的值为false，即可移除input的DOM即可清空浏览器中上传的文件
