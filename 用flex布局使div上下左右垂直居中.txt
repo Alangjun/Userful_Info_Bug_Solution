@@ -1,0 +1,21 @@
+html部分
+<body>
+
+<div class="main">
+  <div class="middle">居中部分</div>
+</div>
+
+</body>
+
+style部分
+
+   .main{
+      display: flex;
+      width: 100%;  //需要设置父元素的宽度和高度
+      height: 100%;
+      border: 1px solid #2b333f;
+      box-sizing: border-box;
+    }
+    .middle{
+      margin: auto;
+    }
