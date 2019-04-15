@@ -1,0 +1,3 @@
+IE不支持includes方法可采用indexOf解决
+
+可将Arr.includes(item) 改成  Arr.indexOf(item) > -1   
