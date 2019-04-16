@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css过渡效果—元素首次进到可视区域下上移动并显示</title>
+    <script src="jquery-3.3.1.js"></script>
+    <style>
+        .box{
+            width: 700px;
+            height: 200px;
+            background-color: #ddd;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .content{
+            position: relative;
+            top: 20px;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div>我是主页面</div>
+<div class="box">
+ <p class="content">你等会儿我我会对我核对的无ID回武汉</p>
+</div>
+<div class="box">
+    <p class="content">freferferwf给他如果突然erfe</p>
+</div>
+<div class="box">
+    <p class="content">32222222222222222222222</p>
+</div>
+<div class="box">
+    <p class="content">1111111111111111</p>
+</div>
+<div class="box">
+    <p class="content">333333333333333</p>
+</div>
+<div class="box">
+    <p class="content">44444444444444</p>
+</div>
+<div class="box">
+    <p class="content">6666666666666</p>
+</div>
+<div class="box">
+    <p class="content">777777777777777777777</p>
+</div>
+<div class="box">
+    <p class="content">8888888888</p>
+</div>
+<div class="box">
+    <p class="content">sdfs ffsfew</p>
+</div>
+<div class="box">
+    <p class="content">4453r43f34f34</p>
+</div>
+<div class="box">
+    <p class="content">fsdfefewf</p>
+</div>
+<div class="box">
+    <p class="content">56465464</p>
+</div>
+
+
+<button id="btn">开始动画</button>
+<script>
+    $(window).scroll(function () {
+        let boxEleArr = $('.box')
+        for(let i=0;i<boxEleArr.length;i++){
+            let theBoxTop = $(boxEleArr[i]).offset().top;
+            if (theBoxTop >= $(window).scrollTop() && theBoxTop < ($(window).scrollTop() + $(window).height())) {
+                $(boxEleArr[i]).find('.content').animate({
+                    top:'0',
+                    opacity: '1',
+                },1500)
+            }
+        }
+    })
+</script>
+</body>
+</html>
