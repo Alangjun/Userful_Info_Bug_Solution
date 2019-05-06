@@ -1,7 +1,10 @@
 
-asideResize() //执行该函数触发resize事件
+asideResize() //鎵ц璇ュ嚱鏁拌Е鍙憆esize浜嬩欢
 
 asideResize(){
-  let myEvent = new Event('resize');   // resize是指resize事件 
-  window.dispatchEvent(myEvent);  // 触发window的resize事件
+  let myEvent = new Event('resize');   // resize鏄寚resize浜嬩欢 
+  window.dispatchEvent(myEvent);  // 瑙﹀彂window鐨剅esize浜嬩欢
 }
+
+
+娉細 //IE涓嶆敮鎸佹鏂规硶
