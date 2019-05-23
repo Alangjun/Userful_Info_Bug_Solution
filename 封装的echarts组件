@@ -58,3 +58,55 @@
   background-color: #fff;
 }
 </style>
+
+
+
+
+
+使用说明
+
+// 可自适应div宽度和高度
+
+
+//使用方式
+//父组件代码
+<template>
+  <div>
+    <echarts-com :options="fatherOptions" id="id1"></echarts-com>
+    <echarts-com :options="fatherOptions" id="id2"></echarts-com>
+    <div>
+      <el-button @click="changeIt">改变echarts</el-button>
+    </div>
+  </div>
+</template>
+<script>
+  import echartsCom from './echartComponent'
+  export default {
+    components:{echartsCom},
+    data() {
+      return {
+        fatherOptions:{}
+      }
+    },
+    methods: {
+      changeIt(){
+        this.fatherOptions = {
+          xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line',
+          }]
+        }
+      }
+    }
+  }
+</script>
+
+
+
