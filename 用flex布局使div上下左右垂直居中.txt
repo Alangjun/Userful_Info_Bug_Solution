@@ -1,17 +1,18 @@
-html����
+第一种方式（IE不支持）
+html部分
 <body>
 
 <div class="main">
-  <div class="middle">���в���</div>
+  <div class="middle">居中部分</div>
 </div>
 
 </body>
 
-style����
+style部分
 
    .main{
       display: flex;
-      width: 100%;  //��Ҫ���ø�Ԫ�صĿ��Ⱥ͸߶�
+      width: 100%;  //需要设置父元素的宽度和高度
       height: 100%;
       border: 1px solid #2b333f;
       box-sizing: border-box;
@@ -19,3 +20,32 @@ style����
     .middle{
       margin: auto;
     }
+    
+    第二种方式
+
+html部分
+<body>
+
+<div class="main">
+  <div>居中部分</div>
+</div>
+
+</body>
+
+style部分
+
+   .main{
+      width: 100%;  //需要设置父元素的宽度和高度
+      height: 100%;
+      border: 1px solid #2b333f;
+      box-sizing: border-box;
+      display:-webkit-box;/* android 2.1-3.0, ios 3.2-4.3 */
+      display:-webkit-flex;/* Chrome 21+ */
+      display:-ms-flexbox;/* WP IE 10 */
+      display:flex;/* android 4.4 */
+      align-items: center;
+      justify-content: center;
+    }
+   
+    
+    
