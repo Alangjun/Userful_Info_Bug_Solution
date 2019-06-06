@@ -1,0 +1,9 @@
+html部分
+<div class="nochose">禁止选中</div>
+
+CSS部分
+.nochose{
+    -moz-user-select: none;    /* 针对IE */
+    -khtml-user-select: none;   /* 针对Chrome、Safari */
+    user-select: none;   /* firefox专有的 */
+}
