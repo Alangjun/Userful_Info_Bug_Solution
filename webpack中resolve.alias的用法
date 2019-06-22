@@ -1,0 +1,15 @@
+webpack 配置
+
+webpack.common.js文件
+resolve.alias可以配置文件别名，用于快速引用组件
+如这样配置
+module.exports = {
+ resolve:{
+    alias: {
+        myEcharts: path.resolve(__dirname, '../../myEcharts')  //myEcharts 所在目录
+    }
+ }
+}
+
+.vue文件引入
+import myEcharts from 'myEcharts'
