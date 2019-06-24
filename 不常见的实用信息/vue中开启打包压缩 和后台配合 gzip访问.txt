@@ -1,0 +1,14 @@
+1、安装依赖 compression-webpack-plugin 
+    (a) npm install --save-dev compression-webpack-plugin 
+ 
+     //(此处有坑) 如果打包报错，应该是版本问题 ，先卸载之前安装的此插件 
+    (b) 然后安装低版本 
+  npm install --save-dev compression-webpack-plugin@1.1.11
+
+2.打开 config/index.js ，找到 build 对象中的 productionGzip ，改成 true
+
+3.等安装好了，重新打包 npm run build ，此时打包的文件会 新增 .gz 文件。是不是比原来的js文件小很多呢，之后项目访问的文件就是这个.gz文件 。
+4.后台nginx开启gzip模式访问，浏览器访问项目，自动会找到 .gz 的文件。加载速度明显提高。
+
+参考链接：https://blog.csdn.net/qq_19767623/article/details/83185132
+
