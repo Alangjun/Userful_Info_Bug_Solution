@@ -1,0 +1,23 @@
+1、请求的headers中配置
+headers: {
+    'Content-Type': 'multipart/form-data;  //不需要加boundary，浏览器会自动加上
+}
+2、axios请求拦截器里不做任何处理，否则上传会出错
+
+Axios.interceptors.request.use(
+  config => {
+    //此处有一个巨坑，Content-Type为multipart/form-data时，不要再处理config中的data，否则提交会失败
+    if(config.headers['Content-Type']!='multipart/form-data;'){  // 只要请求的Content-Type是multipart/form-data类型，就不做任何处理
+      if(typeof(config.data) == 'object') {
+        config.data = qs.stringify(config.data)
+      }
+    }
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
+
+
+    //参考链接： https://blog.csdn.net/qq_41688165/article/details/80834842
