@@ -1,1 +1,33 @@
-123
+通常，js设置cookie为
+
+//设置cookie值，name为cookie名称，value为值，days为过期天数；
+const setCookies = function (name,value,days) {
+  let exp = new Date();
+  exp.setTime(exp.getTime() + days*24*60*60*1000);
+  document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+};
+
+js读取cookie值
+
+//根据name获取cookie值
+const getCookie = function (n) {
+  if (document.cookie.length>0){
+    let c_start=document.cookie.indexOf(n + "=",20)   // 所以需要跳过__guid进行搜索cookie名称，这里20为随便添加个数字
+    if (c_start!=-1) {
+      c_start=c_start + n.length+1
+      let c_end=document.cookie.indexOf(";",c_start)
+      if (c_end==-1) c_end=document.cookie.length;
+      return unescape(document.cookie.substring(c_start,c_end))
+    }
+  }
+  return ""
+}
+
+由于浏览器存储cookie的格式可能不太一样，
+比如：360浏览器存储的cookie内容里的前面部分为__guid=111872281.853601309898493000.1544410477665.5254;....
+其他浏览器存储的cookie内容里的前面部分为 _ga=GA1.1.249552098.1533192085; Hm_lvt_a61f342bf7fe6e2cd3e8cea54b13ba9b=1557018617;...
+
+若cookie的名称为被字符串 __guid或_ga包含的字段（如：__guid、guid,uid,id,_ga,ga）时，利用上述getCookie的方法获取cookie时，就会出现无法读取到正确的cookie值的问题，所以需要跳过cookie内容里前面部分的字符串进行indexOf,所以需要制定从哪个位置开始搜索，这里我设置的是从20以后的位置进行搜索的
+
+
+
