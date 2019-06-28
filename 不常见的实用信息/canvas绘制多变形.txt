@@ -1,0 +1,91 @@
+<template>
+<div id="canvas-wrapper">
+  <canvas id="myCanvas" width="500" height="500" @click="canvasClicked"></canvas>
+</div>
+</template>
+
+<script>
+  export default {
+    data(){
+      return{
+        xFirstStart:null,
+        yFirstStart: null,
+        xStart: null,
+        yStart: null,
+        xEnd: null,
+        yEnd: null,
+        initFlag: true,
+        drawFlag: true
+      }
+    },
+    methods:{
+      canvasClicked(e){
+        if(!this.drawFlag){
+          return
+        }
+        if(this.initFlag){
+          if(!this.xStart){
+            this.xStart = e.offsetX;
+            this.yStart = e.offsetY;
+            this.xFirstStart = this.xStart;
+            this.yFirstStart = this.yStart;
+            this.drawCircle(this.xStart,this.yStart);
+          } else {
+            this.xEnd = e.offsetX;
+            this.yEnd = e.offsetY;
+            this.drawCircle(this.xEnd,this.yEnd);
+            this.drawLine(this.xStart,this.yStart,this.xEnd,this.yEnd);
+            this.initFlag = false
+          }
+        } else {
+          this.xStart = this.xEnd;
+          this.yStart = this.yEnd;
+          this.xEnd = e.offsetX;
+          this.yEnd = e.offsetY;
+          if(this.IsInFirstCircle(this.xEnd,this.yEnd)){
+            this.drawLine(this.xStart,this.yStart,this.xFirstStart,this.yFirstStart);
+            this.drawFlag = false
+          } else {
+            this.drawCircle(this.xEnd,this.yEnd);
+            this.drawLine(this.xStart,this.yStart,this.xEnd,this.yEnd);
+          }
+
+        }
+      },
+      IsInFirstCircle(x,y){
+        let x_diff =Math.abs(x - this.xFirstStart);
+        let y_diff = Math.abs(y - this.yFirstStart);
+        let distance = x_diff*x_diff + y_diff*y_diff;
+        console.log(x_diff,y_diff,distance)
+        if(distance<=10*10){
+          return true;
+        } else {
+          return false;
+        }
+      },
+      drawCircle(x,y){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.beginPath();
+        ctx.arc(x,y,10,0,2*Math.PI);
+        ctx.stroke();
+      },
+      drawLine(xStart,yStart,xEnd,yEnd){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.moveTo(xStart,yStart);
+        ctx.lineTo(xEnd,yEnd)
+        ctx.stroke()
+      },
+    }
+  }
+</script>
+
+<style lang="scss">
+#canvas-wrapper{
+  #myCanvas{
+    background: #9E9E9E;
+    border: 1px solid #999;
+  }
+}
+</style>
