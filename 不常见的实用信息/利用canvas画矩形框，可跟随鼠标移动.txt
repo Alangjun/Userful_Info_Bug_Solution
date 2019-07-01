@@ -1,0 +1,145 @@
+<template>
+<div id="canvas-wrapper">
+  <canvas ref="myCanvas" id="myCanvas" width="500" height="500"
+          @click="canvasClicked" @mousemove="canvasMove"
+          @mousedown="mousedown" @mouseup="mouseup"
+  ></canvas>
+</div>
+</template>
+
+<script>
+  export default {
+    data(){
+      return{
+        xStart: null,
+        yStart: null,
+        xEnd: null,
+        yEnd: null,
+        targetX: 100,
+        targetY:100,
+        isMouseDown: false,
+        clickedTimes: 0,
+        rectX:null,
+        rectY:null,
+        rectWidth:null,
+        rectHeight: null,
+        disWidth: null,
+        disHeight: null
+      }
+    },
+    methods:{
+      mousedown(e){
+        if(this.clickedTimes>=2){
+          this.isMouseDown = true
+          this.targetX = e.offsetX
+          this.targetY = e.offsetY
+          this.disWidth = this.targetX - this.rectX;
+          this.disHeight = this.targetY - this.rectY;
+        }
+      },
+      mouseup(e){
+        this.isMouseDown = false
+      },
+      canvasMove(e){
+        let inRect = this.IsInRect(e,this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight);
+        if(inRect){
+          this.$refs['myCanvas'].style.cursor = 'move'
+        } else {
+          this.$refs['myCanvas'].style.cursor = 'default'
+        }
+        if(this.isMouseDown){
+
+          this.rectX = e.offsetX - this.disWidth;
+          this.rectY = e.offsetY - this.disHeight;
+          let arr = [
+            {x: this.rectX, y: this.rectY},
+            {x: this.rectX, y: this.rectY + this.rectHeight},
+            {x: this.rectX + this.rectWidth, y: this.rectY},
+            {x: this.rectX + this.rectWidth, y: this.rectY + this.rectHeight},
+          ];
+
+          this.clearCanvas()
+          this.drawRectLine(this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight)
+          arr.forEach(item=>{
+            this.drawRectFill(item.x,item.y,10,10)
+          })
+        }
+      },
+      canvasClicked(e){
+        if(this.clickedTimes>=2){
+          return
+        } else {
+          if(this.clickedTimes==0){
+            this.xStart = e.offsetX;
+            this.yStart = e.offsetY;
+            this.drawRectFill(e.offsetX, e.offsetY,10,10)
+          } else {
+            this.xEnd = e.offsetX;
+            this.yEnd = e.offsetY;
+            if(this.xStart<this.xEnd){
+              this.rectX = this.xStart;
+            } else {
+              this.rectX = this.xEnd;
+            }
+            if(this.yStart<this.yEnd){
+              this.rectY = this.yStart;
+            } else {
+              this.rectY = this.yEnd;
+            }
+
+            this.rectWidth = Math.abs(this.xEnd - this.xStart);
+            this.rectHeight = Math.abs(this.yEnd - this.yStart);
+            this.drawRectFill(e.offsetX, e.offsetY,10,10)
+            this.drawRectLine(this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight);
+            let arr = [
+              {x: this.xEnd, y: this.yStart},
+              {x: this.xStart, y: this.yEnd}
+            ];
+            arr.forEach(item=>{
+              this.drawRectFill(item.x,item.y,10,10)
+            })
+          }
+          this.clickedTimes++;
+        }
+
+      },
+      IsInRect(e,xStart,yStart,width,height){
+        let x = e.offsetX;
+        let y = e.offsetY;
+        if(x<=xStart+width && x>=xStart && y<=yStart+height && y>=yStart){
+          return true
+        } else {
+          return false
+        }
+      },
+      drawRectFill(x,y,width,height){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.fillStyle="#0000FF";
+        ctx.fillRect(x,y,width,height);
+      },
+      drawRectLine(x,y,width,height){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.rect(x,y,width,height);
+        ctx.stroke();
+      },
+
+      clearCanvas(){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.beginPath()
+        ctx.clearRect(0,0,c.width,c.height);
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+#canvas-wrapper{
+  #myCanvas{
+    background: #9E9E9E;
+    border: 1px solid #999;
+  }
+}
+</style>
