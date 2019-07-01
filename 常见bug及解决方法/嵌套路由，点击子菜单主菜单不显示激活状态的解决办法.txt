@@ -1,0 +1,124 @@
+参考项目  https://github.com/Alangjun/devCenter_static_new_version
+
+需要将主菜单的跳转路由 router-link里的to由:to="{name: 'show'}"  改为 :to="{path: '/show'}"
+
+
+页面主框架indexFrame.vue的跳转路由配置
+ <div class="menu-wrapper">
+              <router-link class="menu-item" :to="{name: 'device'}" active-class="active">
+                设备管理
+              </router-link> 
+              <router-link class="menu-item" :to="{path: '/show'}" tag="div" active-class="active">
+                数据展示
+              </router-link>
+              <router-link class="menu-item" :to="{name: 'docs'}" tag="div" active-class="active">
+                文档中心
+              </router-link>
+              <router-link class="menu-item" :to="{name: 'add'}" tag="div" active-class="active">
+                增值服务
+              </router-link>
+</div>
+
+菜单页面框架 (数据展示页面) showFrame.vue
+<template>
+  <div id="show-frame">
+    <el-container>
+      <el-aside width="200px">
+        <div class="left-menu">
+          <div v-for="item in menuData" v-if="item.show" :key="item.path"
+               class="menu-item-wrapper"
+          >
+            <div v-if="!item.hasChild" class="menu-no-child">
+              <router-link class="title menu-item" :to="{name: item.name}" tag="div" active-class="is-active">
+                <i :class="item.clas"></i>{{item.title}}
+              </router-link>
+            </div>
+            <div v-if="item.hasChild" class="menu-has-child">
+              <div class="submenu-title menu-item" @click="subMenuClicked(item.name)">
+                <i :class="item.clas"></i><span>{{item.title}}</span>
+                <!--<i class="el-icon-arrow-down" style="position: absolute;right: 12px;top: 14px;padding: 0 !important;transition: transform .3s;"-->
+                <!--:class="{'arrow-down': currentCollapse == item.name && !!openCollapse}"></i>-->
+              </div>
+              <el-collapse-transition class="submenu-content">
+                <div v-show="menuOpenedObj[item.name]">
+                  <router-link v-for="itemChild in item.childMenuData" v-if="itemChild.show" :to="{name: itemChild.name}"
+                               :key="itemChild.path" tag="div" active-class="is-active" class="transition-box  menu-item">
+                    {{itemChild.childTitle}}
+                  </router-link>
+                </div>
+              </el-collapse-transition>
+            </div>
+          </div>
+        </div>
+
+      </el-aside>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
+    </el-container>
+  </div>
+</template>
+
+<script>
+  export default {
+    data(){
+      return{
+        menuOpenedObj: { //默认展开的菜单 name
+          functionSet: 'functionSet',
+          appSet: 'appSet',
+          deviceManage: 'deviceManage',
+          service: 'service'
+        },
+        menuData: [
+          {title: '产品概况', path: '/show/overview', name: 'overview', clas:'iconfont icon-chanpinguanli1', show: true, hasChild: false},
+          {title: '统计信息', path: '/show/statistics', name: 'statistics', clas:'iconfont icon-qushi', show: true, hasChild: false},
+        ],
+      }
+    },
+    methods:{
+      subMenuClicked(name){
+        if(!this.menuOpenedObj[name]){
+          this.$set(this.menuOpenedObj,name,name)
+        } else{
+          this.$delete(this.menuOpenedObj,name)
+        }
+      },
+    }
+  }
+</script>
+
+路由配置页面
+Vue.use(Router)
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'IndexFrame',
+      redirect: 'device',
+      component: IndexFrame,
+      children: [
+        {
+          path: 'device',
+          name: 'device',
+          component: Device
+        },
+        {
+          path: 'show',
+          name: 'show',
+          redirect: '/show/overview',
+          component: ShowFrame,
+          children: [
+            {
+              path: 'overview',
+              name: 'overview',
+              component: OverView
+            },
+            {
+              path: 'statistics',
+              name: 'statistics',
+              component: Statistics
+            },
+          ]
+        },
+
+
