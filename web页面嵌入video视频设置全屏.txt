@@ -1,8 +1,8 @@
-不能在行内设置style，应该单独设置video的width与height
+涓嶈兘鍦ㄨ鍐呰缃畇tyle锛屽簲璇ュ崟鐙缃畍ideo鐨剋idth涓巋eight
 
-如下
+濡備笅
   <video id="video-play" class="video-js vjs-default-skin vjs-big-play-centered" poster="" width="700" height="535" 
          playsinline webkit-playsinline controls preload="auto" x-webkit-airplay="true"
          controlsList="nodownload" oncontextmenu="return false">
-    <source id="source" src="http://paasalihlsgw.lechange.cn:9001/LCO/4J05B71GA1D7C74/1/0/20181220144135/dev_20181220144135_grmcn3bg3tqgn34q.m3u8" type="application/x-mpegURL" >
+    <source id="source" src="http://paasalihlsgw.lechange.cn:1234/LCO/4J05B71GA1D7C74/1/0/20181220144135/dev_20181220144135_grmcn3bg3tqgn56q.m3u8" type="application/x-mpegURL" >
   </video>
