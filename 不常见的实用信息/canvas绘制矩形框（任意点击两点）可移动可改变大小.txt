@@ -1,0 +1,229 @@
+<template>
+<div id="canvas-wrapper">
+  <canvas ref="myCanvas" id="myCanvas" width="500" height="500"
+          @click="canvasClicked" @mousemove="canvasMove"
+          @mousedown="mousedown" @mouseup="mouseup"
+  ></canvas>
+
+</div>
+</template>
+
+<script>
+  export default {
+    data(){
+      return{
+        xStart: null,
+        yStart: null,
+        xEnd: null,
+        yEnd: null,
+        targetX: 100,
+        targetY:100,
+        isMouseDown: false,
+        clickedTimes: 0,
+        rectX:null,
+        rectY:null,
+        rectWidth:null,
+        rectHeight: null,
+        disWidth: null,
+        disHeight: null,
+        resizeClick: false,
+        positionName: '',
+        positionIndex: '',
+        moveDisWidth: null,  // 鼠标点击的位置与操作点(矩形框的四个角之一)位置之间的水平距离  防止鼠标第一次点击操作点上方时有移动操作
+        moveDisHeight: null  // 同上
+      }
+    },
+    computed:{
+      fourSmallRectArr(){
+        return [
+          {x: this.rectX, y: this.rectY},  //  矩形框左上角
+          {x: this.rectX, y: this.rectY + this.rectHeight},  // 矩形框矩形框左下角
+          {x: this.rectX + this.rectWidth, y: this.rectY},  // 矩形框右上角
+          {x: this.rectX + this.rectWidth, y: this.rectY + this.rectHeight},  // 矩形框右下角
+        ]
+      }
+    },
+    methods:{
+      mousedown(e){
+        if(!this.positionName){
+          if(this.clickedTimes>=2){
+            this.isMouseDown = true
+            this.targetX = e.offsetX
+            this.targetY = e.offsetY
+            this.disWidth = this.targetX - this.rectX;
+            this.disHeight = this.targetY - this.rectY;
+          }
+        } else {
+          this.determineOperatePoint(e)
+          this.resizeClick = true;
+        }
+      },
+      mouseup(e){
+        this.isMouseDown = false;
+        this.resizeClick = false;
+      },
+      canvasMove(e){
+        if(!this.resizeClick){ //移动矩形框
+          let inRect = this.IsInRect(e,this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight);
+          if(inRect){
+            this.$refs['myCanvas'].style.cursor = 'move'
+          } else {
+            this.$refs['myCanvas'].style.cursor = 'default'
+          }
+          if(this.isMouseDown){
+            this.rectX = e.offsetX - this.disWidth;
+            this.rectY = e.offsetY - this.disHeight;
+            this.clearCanvas()
+            this.drawRectLine(this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight)
+            this.fourSmallRectArr.forEach(item=>{
+              this.drawRectFill(item.x,item.y,10,10)
+            })
+          }
+        } else {  //  调整矩形框大小
+          this.resizeRect(e)
+        }
+        this.mouseStyle(e,this.fourSmallRectArr)
+
+      },
+      resizeRect(e){
+        let moveTargetX = e.offsetX + this.moveDisWidth;
+        let moveTargetY = e.offsetY + this.moveDisHeight;
+
+        switch (this.positionName){
+          case 'rightBottom':
+            this.rectWidth = Math.abs(this.rectX - moveTargetX);
+            this.rectHeight = Math.abs(this.rectY - moveTargetY);
+            break;
+          case 'rightTop':
+            this.rectWidth = Math.abs(this.rectX - moveTargetX);
+            this.rectHeight += this.rectY - moveTargetY;
+            this.rectY = moveTargetY;
+            break;
+          case 'leftBottom':
+            this.rectWidth += this.rectX - moveTargetX;
+            this.rectHeight = Math.abs(this.rectY - moveTargetY);
+            this.rectX = moveTargetX;
+            break;
+          case 'leftTop':
+            this.rectWidth += this.rectX - moveTargetX;
+            this.rectHeight += this.rectY - moveTargetY;
+            this.rectX = moveTargetX;
+            this.rectY = moveTargetY;
+            break;
+        }
+        this.drawRectAndFourFillRect()
+
+
+      },
+      determineOperatePoint(e){  // 确定操作点的坐标及鼠标与操作点之间的x和y距离
+        let x=this.fourSmallRectArr[this.positionIndex].x;
+        let y=this.fourSmallRectArr[this.positionIndex].y;
+        this.moveDisWidth = x - e.offsetX;
+        this.moveDisHeight = y - e.offsetY;
+      },
+      mouseStyle(e,arr){
+        if(this.IsInRect(e,arr[0].x,arr[0].y,10,10)){
+          this.$refs['myCanvas'].style.cursor = 'nwse-resize';
+          this.positionName='leftTop';
+          this.positionIndex = 0;
+        } else if(this.IsInRect(e,arr[1].x,arr[1].y,10,10)){
+          this.$refs['myCanvas'].style.cursor = 'ne-resize';
+          this.positionName='leftBottom';
+          this.positionIndex = 1;
+        } else if(this.IsInRect(e,arr[2].x,arr[2].y,10,10)) {
+          this.$refs['myCanvas'].style.cursor = 'ne-resize';
+          this.positionName='rightTop';
+          this.positionIndex = 2;
+        } else if(this.IsInRect(e,arr[3].x,arr[3].y,10,10)){
+          this.$refs['myCanvas'].style.cursor = 'nwse-resize';
+          this.positionName='rightBottom';
+          this.positionIndex = 3;
+        } else {
+          this.positionName='';
+          this.positionIndex = '';
+        }
+      },
+      canvasClicked(e){
+        if(this.clickedTimes>=2){
+          return
+        } else {
+          if(this.clickedTimes==0){
+            this.xStart = e.offsetX;
+            this.yStart = e.offsetY;
+            this.drawRectFill(e.offsetX, e.offsetY,10,10)
+          } else {
+            this.xEnd = e.offsetX;
+            this.yEnd = e.offsetY;
+            if(this.xStart<this.xEnd){
+              this.rectX = this.xStart;
+            } else {
+              this.rectX = this.xEnd;
+            }
+            if(this.yStart<this.yEnd){
+              this.rectY = this.yStart;
+            } else {
+              this.rectY = this.yEnd;
+            }
+
+            this.rectWidth = Math.abs(this.xEnd - this.xStart);
+            this.rectHeight = Math.abs(this.yEnd - this.yStart);
+            this.drawRectFill(e.offsetX, e.offsetY,10,10)
+            this.drawRectLine(this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight);
+            let arr = [
+              {x: this.xEnd, y: this.yStart},
+              {x: this.xStart, y: this.yEnd}
+            ];
+            arr.forEach(item=>{
+              this.drawRectFill(item.x,item.y,10,10)
+            })
+          }
+          this.clickedTimes++;
+        }
+
+      },
+      IsInRect(e,xStart,yStart,width,height){
+        let x = e.offsetX;
+        let y = e.offsetY;
+        if(x<=xStart+width && x>=xStart && y<=yStart+height && y>=yStart){
+          return true
+        } else {
+          return false
+        }
+      },
+      drawRectFill(x,y,width,height){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.fillStyle="#0000FF";
+        ctx.fillRect(x,y,width,height);
+      },
+      drawRectLine(x,y,width,height){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.rect(x,y,width,height);
+        ctx.stroke();
+      },
+      drawRectAndFourFillRect(){
+        this.clearCanvas()
+        this.drawRectLine(this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight)
+        this.fourSmallRectArr.forEach(item=>{
+          this.drawRectFill(item.x,item.y,10,10)
+        })
+      },
+      clearCanvas(){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.beginPath()
+        ctx.clearRect(0,0,c.width,c.height);
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+#canvas-wrapper{
+  #myCanvas{
+    background: #9E9E9E;
+    border: 1px solid #999;
+  }
+}
+</style>
