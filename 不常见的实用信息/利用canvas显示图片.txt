@@ -1,0 +1,203 @@
+<template>
+<div id="canvas-wrapper">
+  <canvas ref="myCanvas" id="myCanvas" width="500" height="500"
+          @click="canvasClicked" @mousemove="canvasMove"
+          @mousedown="mousedown" @mouseup="mouseup"
+  ></canvas>
+  <canvas v-show="false" ref="clippedCanvas" id="clippedCanvas" width="500" height="500"></canvas>
+  <img :src="imgUrl">
+  <img src='../assets/crop.jpg' id="img" style="display: none">
+</div>
+</template>
+
+<script>
+  export default {
+    data(){
+      return{
+        xStart: null,
+        yStart: null,
+        xEnd: null,
+        yEnd: null,
+        targetX: 100,
+        targetY:100,
+        isMouseDown: false,
+        clickedTimes: 0,
+        rectX:null,
+        rectY:null,
+        rectWidth:null,
+        rectHeight: null,
+        disWidth: null,
+        disHeight: null,
+        imgUrl: null
+      }
+    },
+    mounted(){
+      this.showImg()
+    },
+    methods:{
+      mousedown(e){
+        if(this.clickedTimes>=2){
+          this.isMouseDown = true
+          this.targetX = e.offsetX
+          this.targetY = e.offsetY
+          this.disWidth = this.targetX - this.rectX;
+          this.disHeight = this.targetY - this.rectY;
+        }
+      },
+      mouseup(e){
+        this.isMouseDown = false
+      },
+      canvasMove(e){
+        let inRect = this.IsInRect(e,this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight);
+        if(inRect){
+          this.$refs['myCanvas'].style.cursor = 'move'
+        } else {
+          this.$refs['myCanvas'].style.cursor = 'default'
+        }
+        if(this.isMouseDown){
+          this.rectX = e.offsetX - this.disWidth;
+          this.rectY = e.offsetY - this.disHeight;
+          let arr = [
+            {x: this.rectX, y: this.rectY},
+            {x: this.rectX, y: this.rectY + this.rectHeight},
+            {x: this.rectX + this.rectWidth, y: this.rectY},
+            {x: this.rectX + this.rectWidth, y: this.rectY + this.rectHeight},
+          ];
+
+          this.clearCanvas()
+          this.showImg2()
+          this.showClipped(this.rectX, this.rectY, this.rectWidth, this.rectHeight)
+          this.drawRectLine(this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight)
+          arr.forEach(item=>{
+            this.drawRectFill(item.x,item.y,10,10)
+          })
+        }
+        let arr = [
+          {x: this.rectX, y: this.rectY},
+          {x: this.rectX, y: this.rectY + this.rectHeight},
+          {x: this.rectX + this.rectWidth, y: this.rectY},
+          {x: this.rectX + this.rectWidth, y: this.rectY + this.rectHeight},
+        ];
+        this.mouseStyle(e,arr)
+      },
+      mouseStyle(e,arr){
+        arr.forEach((item,index)=>{
+          let isInRect = this.IsInRect(e,item.x,item.y,10,10)
+          if(isInRect){
+            switch (index){
+              case 0: this.$refs['myCanvas'].style.cursor = 'nwse-resize';break;
+              case 1: this.$refs['myCanvas'].style.cursor = 'ne-resize';break;
+              case 2: this.$refs['myCanvas'].style.cursor = 'ne-resize';break;
+              case 3: this.$refs['myCanvas'].style.cursor = 'nwse-resize';break;
+            }
+          } else {
+
+          }
+        })
+      },
+      canvasClicked(e){
+        if(this.clickedTimes>=2){
+          return
+        } else {
+          if(this.clickedTimes==0){
+            this.xStart = e.offsetX;
+            this.yStart = e.offsetY;
+            this.drawRectFill(e.offsetX, e.offsetY,10,10)
+          } else {
+            this.xEnd = e.offsetX;
+            this.yEnd = e.offsetY;
+            if(this.xStart<this.xEnd){
+              this.rectX = this.xStart;
+            } else {
+              this.rectX = this.xEnd;
+            }
+            if(this.yStart<this.yEnd){
+              this.rectY = this.yStart;
+            } else {
+              this.rectY = this.yEnd;
+            }
+
+            this.rectWidth = Math.abs(this.xEnd - this.xStart);
+            this.rectHeight = Math.abs(this.yEnd - this.yStart);
+            this.drawRectFill(e.offsetX, e.offsetY,10,10)
+            this.drawRectLine(this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight);
+            let arr = [
+              {x: this.xEnd, y: this.yStart},
+              {x: this.xStart, y: this.yEnd}
+            ];
+            arr.forEach(item=>{
+              this.drawRectFill(item.x,item.y,10,10)
+            })
+            let clippedCanvasDom = document.getElementById("clippedCanvas");
+            clippedCanvasDom.width = this.rectWidth
+            clippedCanvasDom.height = this.rectHeight
+            this.showClipped(this.rectX, this.rectY, this.rectWidth, this.rectHeight)
+
+          }
+          this.clickedTimes++;
+        }
+
+      },
+      IsInRect(e,xStart,yStart,width,height){
+        let x = e.offsetX;
+        let y = e.offsetY;
+        if(x<=xStart+width && x>=xStart && y<=yStart+height && y>=yStart){
+          return true
+        } else {
+          return false
+        }
+      },
+      drawRectFill(x,y,width,height){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.fillStyle="#0000FF";
+        ctx.fillRect(x,y,width,height);
+      },
+      drawRectLine(x,y,width,height){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.rect(x,y,width,height);
+        ctx.stroke();
+      },
+      showImg(){
+        let canvasDom = document.getElementById("myCanvas");
+        let context = canvasDom.getContext('2d');
+        let img = document.getElementById('img');
+        img.onload = function () {
+          context.drawImage(img,0,0); //一定要写在onload回调中，否则看不到图片
+        }
+      },
+      showImg2(){
+        let canvasDom = document.getElementById("myCanvas");
+        let context = canvasDom.getContext('2d');
+        let img = document.getElementById('img');
+         context.drawImage(img,0,0); //一定要写在onload回调中，否则看不到图片
+
+      },
+      showClipped(sx, sy, sWidth, sHeight){
+        let clippedCanvasDom = document.getElementById("clippedCanvas");
+        // clippedCanvasDom.width = sWidth
+        // clippedCanvasDom.height = sHeight
+        let contextClip = clippedCanvasDom.getContext('2d');
+        let img = document.getElementById('img');
+        contextClip.drawImage(img,sx, sy, sWidth, sHeight,0,0,sWidth, sHeight); //一定要写在onload回调中，否则看不到图片
+        this.imgUrl = clippedCanvasDom.toDataURL()  //生成图片 base64格式
+      },
+      clearCanvas(){
+        let c=document.getElementById("myCanvas");
+        let ctx=c.getContext("2d");
+        ctx.beginPath()
+        ctx.clearRect(0,0,c.width,c.height);
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+#canvas-wrapper{
+  #myCanvas,#clippedCanvas{
+    background: #9E9E9E;
+    border: 1px solid #999;
+  }
+}
+</style>
