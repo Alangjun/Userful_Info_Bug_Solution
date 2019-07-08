@@ -32,18 +32,18 @@
         resizeClick: false,
         positionName: '',
         positionIndex: '',
-        moveDisWidth: null,  // Êó±êµã»÷µÄÎ»ÖÃÓë²Ù×÷µã(¾ØĞÎ¿òµÄËÄ¸ö½ÇÖ®Ò»)Î»ÖÃÖ®¼äµÄË®Æ½¾àÀë  ·ÀÖ¹Êó±êµÚÒ»´Îµã»÷²Ù×÷µãÉÏ·½Ê±ÓĞÒÆ¶¯²Ù×÷
-        moveDisHeight: null,  // Í¬ÉÏ
+        moveDisWidth: null,  // é¼ æ ‡ç‚¹å‡»çš„ä½ç½®ä¸æ“ä½œç‚¹(çŸ©å½¢æ¡†çš„å››ä¸ªè§’ä¹‹ä¸€)ä½ç½®ä¹‹é—´çš„æ°´å¹³è·ç¦»  é˜²æ­¢é¼ æ ‡ç¬¬ä¸€æ¬¡ç‚¹å‡»æ“ä½œç‚¹ä¸Šæ–¹æ—¶æœ‰ç§»åŠ¨æ“ä½œ
+        moveDisHeight: null,  // åŒä¸Š
         flag: true
       }
     },
     computed:{
       fourSmallRectArr(){
         return [
-          {x: this.rectX, y: this.rectY},  //  ¾ØĞÎ¿ò×óÉÏ½Ç
-          {x: this.rectX, y: this.rectY + this.rectHeight},  // ¾ØĞÎ¿ò¾ØĞÎ¿ò×óÏÂ½Ç
-          {x: this.rectX + this.rectWidth, y: this.rectY},  // ¾ØĞÎ¿òÓÒÉÏ½Ç
-          {x: this.rectX + this.rectWidth, y: this.rectY + this.rectHeight},  // ¾ØĞÎ¿òÓÒÏÂ½Ç
+          {x: this.rectX, y: this.rectY},  //  çŸ©å½¢æ¡†å·¦ä¸Šè§’
+          {x: this.rectX, y: this.rectY + this.rectHeight},  // çŸ©å½¢æ¡†çŸ©å½¢æ¡†å·¦ä¸‹è§’
+          {x: this.rectX + this.rectWidth, y: this.rectY},  // çŸ©å½¢æ¡†å³ä¸Šè§’
+          {x: this.rectX + this.rectWidth, y: this.rectY + this.rectHeight},  // çŸ©å½¢æ¡†å³ä¸‹è§’
         ]
       }
     },
@@ -51,7 +51,7 @@
       this.showImg()
     },
     methods:{
-      mousedown(e){  // Êó±ê°´ÏÂ´¥·¢ÊÂ¼ş
+      mousedown(e){  // é¼ æ ‡æŒ‰ä¸‹è§¦å‘äº‹ä»¶
         if(!this.positionName){
           if(this.clickedTimes>=2){
             this.isMouseDown = true
@@ -70,14 +70,14 @@
         this.resizeClick = false;
       },
       mouseMove(e){
-        if(!this.resizeClick) { //ÒÆ¶¯¾ØĞÎ¿ò
+        if(!this.resizeClick) { //ç§»åŠ¨çŸ©å½¢æ¡†
           let inRect = this.IsInRect(e,this.rectX+5,this.rectY+5,this.rectWidth,this.rectHeight);
           if(inRect){
             this.$refs['myCanvas'].style.cursor = 'move'
           } else {
             this.$refs['myCanvas'].style.cursor = 'default'
           }
-          if(this.isMouseDown){  // Êó±ê°´ÏÂ ×¼±¸ÒÆ¶¯
+          if(this.isMouseDown){  // é¼ æ ‡æŒ‰ä¸‹ å‡†å¤‡ç§»åŠ¨
             this.rectX = e.offsetX - this.disWidth;
             this.rectY = e.offsetY - this.disHeight;
             this.clearCanvas();
@@ -85,7 +85,7 @@
             this.drawRectAndFourFillRect()
             this.showClipped(this.rectX, this.rectY, this.rectWidth, this.rectHeight)
           }
-        } else { //  µ÷Õû¾ØĞÎ¿ò´óĞ¡
+        } else { //  è°ƒæ•´çŸ©å½¢æ¡†å¤§å°
           this.clearCanvas()
           this.resizeRect(e)
           this.showClipped(this.rectX, this.rectY, this.rectWidth, this.rectHeight)
@@ -120,7 +120,7 @@
         this.showImg2()
         this.drawRectAndFourFillRect()
       },
-      determineOperatePoint(e){  // È·¶¨²Ù×÷µãµÄ×ø±ê¼°Êó±êÓë²Ù×÷µãÖ®¼äµÄxºÍy¾àÀë
+      determineOperatePoint(e){  // ç¡®å®šæ“ä½œç‚¹çš„åæ ‡åŠé¼ æ ‡ä¸æ“ä½œç‚¹ä¹‹é—´çš„xå’Œyè·ç¦»
         let x=this.fourSmallRectArr[this.positionIndex].x;
         let y=this.fourSmallRectArr[this.positionIndex].y;
         this.moveDisWidth = x - e.offsetX;
@@ -147,7 +147,7 @@
           this.positionName='';
           this.positionIndex = '';
         }
-      },  //  ¸ñÊ½»¯Êó±êÑùÊ½
+      },  //  æ ¼å¼åŒ–é¼ æ ‡æ ·å¼
       mouseClicked(e){
         if(this.clickedTimes>=2){
           return
@@ -211,14 +211,14 @@
         let context = canvasDom.getContext('2d');
         let img = document.getElementById('img');
         img.onload = function () {
-          context.drawImage(img,0,0); //Ò»¶¨ÒªĞ´ÔÚonload»Øµ÷ÖĞ£¬·ñÔò¿´²»µ½Í¼Æ¬
+          context.drawImage(img,0,0); //ä¸€å®šè¦å†™åœ¨onloadå›è°ƒä¸­ï¼Œå¦åˆ™çœ‹ä¸åˆ°å›¾ç‰‡
         }
       },
       showImg2(){
         let canvasDom = document.getElementById("myCanvas");
         let context = canvasDom.getContext('2d');
         let img = document.getElementById('img');
-        context.drawImage(img,0,0); //Ò»¶¨ÒªĞ´ÔÚonload»Øµ÷ÖĞ£¬·ñÔò¿´²»µ½Í¼Æ¬
+        context.drawImage(img,0,0); 
 
       },
       showClipped(sx, sy, sWidth, sHeight){
@@ -227,8 +227,8 @@
         clippedCanvasDom.height = sHeight;
         let contextClip = clippedCanvasDom.getContext('2d');
         let img = document.getElementById('img');
-        contextClip.drawImage(img,sx, sy, sWidth, sHeight,0,0,sWidth, sHeight); //Ò»¶¨ÒªĞ´ÔÚonload»Øµ÷ÖĞ£¬·ñÔò¿´²»µ½Í¼Æ¬
-        this.imgUrl = clippedCanvasDom.toDataURL()  //Éú³ÉÍ¼Æ¬ base64¸ñÊ½
+        contextClip.drawImage(img,sx, sy, sWidth, sHeight,0,0,sWidth, sHeight); 
+        this.imgUrl = clippedCanvasDom.toDataURL()  //ç”Ÿæˆå›¾ç‰‡ base64æ ¼å¼
       },
       clearCanvas(){
         let c=document.getElementById("myCanvas");
