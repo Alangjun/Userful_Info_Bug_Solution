@@ -1,0 +1,20 @@
+.el-table{
+  &.el-table--border{
+    border-color: #ddd;
+    td,th.is-leaf {
+      border-bottom: 1px solid #ddd;
+    }
+    th,th.gutter:last-of-type {
+      border-bottom: 1px solid #ddd;
+    }
+    td,th {
+      border-right: 1px solid #ddd;
+    }
+    &::before {
+      height: 0px;
+    }
+  }
+  &::before,&:after{
+    background-color: #ddd;
+  }
+}
