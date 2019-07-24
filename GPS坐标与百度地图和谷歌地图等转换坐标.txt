@@ -1,21 +1,21 @@
-°Ù¶ÈapiÇëÇó·½Ê½£ºhttp://lbsyun.baidu.com/index.php?title=webapi/guide/changeposition
+ç™¾åº¦apiè¯·æ±‚æ–¹å¼ï¼šhttp://lbsyun.baidu.com/index.php?title=webapi/guide/changeposition
 
-²Î¿¼Á´½Ó£ºhttps://www.oschina.net/code/snippet_260395_39205
+å‚è€ƒé“¾æ¥ï¼šhttps://www.oschina.net/code/snippet_260395_39205
 
-GPS×ø±ê»¥×ª£ºWGS-84(GPS)¡¢GCJ-02(GoogleµØÍ¼)¡¢BD-09(°Ù¶ÈµØÍ¼)
+GPSåæ ‡äº’è½¬ï¼šWGS-84(GPS)(å¤§åœ°åæ ‡)ã€GCJ-02(Googleåœ°å›¾)ã€BD-09(ç™¾åº¦åœ°å›¾)
 
-WGS-84£ºÊÇ¹ú¼Ê±ê×¼£¬GPS×ø±ê£¨Google EarthÊ¹ÓÃ¡¢»òÕßGPSÄ£¿é£©
-GCJ-02£ºÖĞ¹ú×ø±êÆ«ÒÆ±ê×¼£¬Google Map¡¢¸ßµÂ¡¢ÌÚÑ¶Ê¹ÓÃ
-BD-09£º°Ù¶È×ø±êÆ«ÒÆ±ê×¼£¬Baidu MapÊ¹ÓÃ
+WGS-84ï¼šæ˜¯å›½é™…æ ‡å‡†ï¼ŒGPSåæ ‡ï¼ˆGoogle Earthä½¿ç”¨ã€æˆ–è€…GPSæ¨¡å—ï¼‰
+GCJ-02ï¼šä¸­å›½åæ ‡åç§»æ ‡å‡†ï¼ŒGoogle Mapã€é«˜å¾·ã€è…¾è®¯ä½¿ç”¨
+BD-09ï¼šç™¾åº¦åæ ‡åç§»æ ‡å‡†ï¼ŒBaidu Mapä½¿ç”¨
 
 //WGS-84 to GCJ-02
 GPS.gcj_encrypt();
 
-//GCJ-02 to WGS-84 ´ÖÂÔ
+//GCJ-02 to WGS-84 ç²—ç•¥
 GPS.gcj_decrypt();
 
-//GCJ-02 to WGS-84 ¾«È·(¶ş·Ö¼«ÏŞ·¨)
-// var threshold = 0.000000001; Ä¿Ç°ÉèÖÃµÄÊÇ¾«È·µ½Ğ¡Êıµãºó9Î»£¬Õâ¸öÖµÔ½Ğ¡£¬Ô½¾«È·£¬µ«ÊÇjavascriptÖĞ£¬¸¡µãÔËËã±¾Éí¾Í²»Ì«¾«È·£¬¾ÅÎ»ÔÚGPSÀïÒ²Æ«²î²»´óÁË
+//GCJ-02 to WGS-84 ç²¾ç¡®(äºŒåˆ†æé™æ³•)
+// var threshold = 0.000000001; ç›®å‰è®¾ç½®çš„æ˜¯ç²¾ç¡®åˆ°å°æ•°ç‚¹å9ä½ï¼Œè¿™ä¸ªå€¼è¶Šå°ï¼Œè¶Šç²¾ç¡®ï¼Œä½†æ˜¯javascriptä¸­ï¼Œæµ®ç‚¹è¿ç®—æœ¬èº«å°±ä¸å¤ªç²¾ç¡®ï¼Œä¹ä½åœ¨GPSé‡Œä¹Ÿåå·®ä¸å¤§äº†
 GSP.gcj_decrypt_exact();
 
 //GCJ-02 to BD-09
@@ -24,17 +24,17 @@ GPS.bd_encrypt();
 //BD-09 to GCJ-02
 GPS.bd_decrypt();
 
-//Çó¾àÀë
+//æ±‚è·ç¦»
 GPS.distance();
 
-Ê¾Àı£º
+ç¤ºä¾‹ï¼š
 document.write("GPS: 39.933676862706776,116.35608315379092<br />");
 var arr2 = GPS.gcj_encrypt(39.933676862706776, 116.35608315379092);
-document.write("ÖĞ¹ú:" + arr2['lat']+","+arr2['lon']+'<br />');
+document.write("ä¸­å›½:" + arr2['lat']+","+arr2['lon']+'<br />');
 var arr3 = GPS.gcj_decrypt_exact(arr2['lat'], arr2['lon']);
-document.write('ÄæËã:' + arr3['lat']+","+arr3['lon']+' ĞèÒªºÍµÚÒ»ĞĞÏàËÆ£¨Ä¿Ç°ÊÇĞ¡Êıµãºó9Î»ÏàµÈ£©');
+document.write('é€†ç®—:' + arr3['lat']+","+arr3['lon']+' éœ€è¦å’Œç¬¬ä¸€è¡Œç›¸ä¼¼ï¼ˆç›®å‰æ˜¯å°æ•°ç‚¹å9ä½ç›¸ç­‰ï¼‰');
 
-[JavaScript]´úÂë  
+[JavaScript]ä»£ç   
 var GPS = {
     PI : 3.14159265358979324,
     x_pi : 3.14159265358979324 * 3000.0 / 180.0,
@@ -44,8 +44,8 @@ var GPS = {
         // a = 6378245.0, 1/f = 298.3
         // b = a * (1 - f)
         // ee = (a^2 - b^2) / a^2;
-        var a = 6378245.0; //  a: ÎÀĞÇÍÖÇò×ø±êÍ¶Ó°µ½Æ½ÃæµØÍ¼×ø±êÏµµÄÍ¶Ó°Òò×Ó¡£
-        var ee = 0.00669342162296594323; //  ee: ÍÖÇòµÄÆ«ĞÄÂÊ¡£
+        var a = 6378245.0; //  a: å«æ˜Ÿæ¤­çƒåæ ‡æŠ•å½±åˆ°å¹³é¢åœ°å›¾åæ ‡ç³»çš„æŠ•å½±å› å­ã€‚
+        var ee = 0.00669342162296594323; //  ee: æ¤­çƒçš„åå¿ƒç‡ã€‚
         var dLat = this.transformLat(lon - 105.0, lat - 35.0);
         var dLon = this.transformLon(lon - 105.0, lat - 35.0);
         var radLat = lat / 180.0 * this.PI;
@@ -186,7 +186,7 @@ var GPS = {
 };
 
 
-[´úÂë][PHP]´úÂë
+[ä»£ç ][PHP]ä»£ç 
 <?php
 class GPS {
     private $PI = 3.14159265358979324;
@@ -313,8 +313,8 @@ class GPS {
         // a = 6378245.0, 1/f = 298.3
         // b = a * (1 - f)
         // ee = (a^2 - b^2) / a^2;
-        $a = 6378245.0;//  a: ÎÀĞÇÍÖÇò×ø±êÍ¶Ó°µ½Æ½ÃæµØÍ¼×ø±êÏµµÄÍ¶Ó°Òò×Ó¡£
-        $ee = 0.00669342162296594323;//  ee: ÍÖÇòµÄÆ«ĞÄÂÊ¡£
+        $a = 6378245.0;//  a: å«æ˜Ÿæ¤­çƒåæ ‡æŠ•å½±åˆ°å¹³é¢åœ°å›¾åæ ‡ç³»çš„æŠ•å½±å› å­ã€‚
+        $ee = 0.00669342162296594323;//  ee: æ¤­çƒçš„åå¿ƒç‡ã€‚
         $dLat = $this->transformLat($lon - 105.0, $lat - 35.0);
         $dLon = $this->transformLon($lon - 105.0, $lat - 35.0);
         $radLat = $lat / 180.0 * $this->PI;
