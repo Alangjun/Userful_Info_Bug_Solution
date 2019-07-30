@@ -1,0 +1,19 @@
+1、找到 config/dev.env.js 文件
+module.exports = merge(prodEnv, {
+  NODE_ENV: '"development"',
+  API_ROOT:'"/api"'   //本地开发时用的域名
+})
+
+2、找到 config/prod.env.js
+module.exports = {
+    NODE_ENV: '"production"',
+    API_ROOT:'"http://****.com"' //上线后用的域名 
+}
+
+3、Axios文件配置
+const HOST_URL = process.env.API_ROOT;
+export const Axios = axios.create({
+  baseURL: HOST_URL+'/api'
+});
+
+注意：步骤1和步骤2中的API_ROOT的值是被两个引号包裹的"''" 或者'""'
