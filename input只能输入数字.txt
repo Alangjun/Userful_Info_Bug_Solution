@@ -1,6 +1,23 @@
-<input type="text" placeholder="��������������" id="age"
+参考：https://blog.csdn.net/six365/article/details/78968725
+
+1、标签内写法
+<input type="text" placeholder="ÇëÊäÈëÄúµÄÄêÁä" id="age"
                                            onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                                            onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
 
+2、函数式写法
+<input type="text" onkeyup="onlyInputNumber" />
 
-https://blog.csdn.net/six365/article/details/78968725
+
+onlyInputNumber = function (event) {
+  let value  = event.target.value
+  if(value.length==1){
+    value=value.replace(/[^1-9]/g,'')
+  }else{
+    value=value.replace(/\D/g,'')
+  }
+  event.target.value = value
+}
+
+
+
