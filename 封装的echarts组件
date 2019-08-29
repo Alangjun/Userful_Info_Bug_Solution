@@ -39,6 +39,7 @@
       },
       echartsSetOption(echart_ele_id,echart_ele_option){
         let temp = echarts.init(document.getElementById(echart_ele_id)) ;
+        temp.clear()     // echarts图表同一画布下，重新画图时 需要先清空画布缓存再执行setOption操作
         temp.setOption(echart_ele_option)
       },
       initEcharts(echart_ele_id){
