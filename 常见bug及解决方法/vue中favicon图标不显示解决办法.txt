@@ -1,9 +1,10 @@
-faviconͼ��һ���޷���ȷ��ʾ��ԭ��
-1��faviconͼ�걻�����js��css�ļ��У������޷�������ʾ
+favicon图标一般无法正确显示的原因
+1、favicon图标被打包到js或css文件中，所以无法正常显示
+2、favicon图标制作网址：http://www.bitbug.net/
 
-��ȷ��������
-1����favicon����static�ļ�����
-2��index.html�ļ�����
+正确配置如下
+1、将favicon放在static文件夹下
+2、index.html文件配置
 
 <!DOCTYPE html>
 <html>
