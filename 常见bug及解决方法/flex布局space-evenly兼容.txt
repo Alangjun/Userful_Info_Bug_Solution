@@ -1,0 +1,13 @@
+<div class="container">flex布局</div>
+
+container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+       //justify-content: space-evenly;  //解决部分浏览器不兼容space-evenly的问题
+      &:before,
+      &:after {
+          content: '';
+          display: block;
+    }
+}
