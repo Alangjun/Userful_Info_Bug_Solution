@@ -1,3 +1,0 @@
-参考链接：https://blog.csdn.net/juhaotian/article/details/78242415
-
-修改option里的series中的itemStyle

@@ -1,0 +1,20 @@
+参考链接：https://blog.csdn.net/juhaotian/article/details/78242415
+
+修改option里的series中的itemStyle
+series:[
+{
+    type: 'bar',
+    itemStyle: {
+        normal: {
+            color: new echarts.graphic.LinearGradient(
+                0, 0, 0, 1,   //  4个参数用于配置渐变色的起止位置, 这4个参数依次对应右/下/左/上四个方位. 而0 0 0 1则代表渐变色从正上方开始
+                [
+                    {offset: 0, color: '#000'},
+                    {offset: 0.5, color: '#888'},
+                    {offset: 1, color: '#ddd'}
+                ]   /数组, 用于配置颜色的渐变过程. 每一项为一个对象, 包含offset和color两个参数. offset的范围是0 ~ 1, 用于表示位置
+            )
+        }
+    }
+}
+]
