@@ -1,6 +1,7 @@
 参考链接：https://blog.csdn.net/tang_yi_/article/details/79401280
 
-注：在某些情况下，vue页面中无法直接调用视频插件播放监控视频，但监控视频在html页面中通常是可以正常显示的，因此这里采用的办法是利用iframe使vue去加载html页面。
+注：在某些情况下，vue页面中无法直接调用视频插件播放监控视频，但监控视频在html页面中通常是可以正常显示的，
+因此这里采用的办法是利用iframe使vue去加载html页面。
 
   <iframe  ref="videoIframe" src="http://xxxxx.html" style="width: 700px;height: 535px;" scrolling="no"></iframe>
   http://xxxxx.html 表示放在服务器上的那个有监控视频的html文件
