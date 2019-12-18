@@ -2,4 +2,19 @@
 
 注：在某些情况下，vue页面中无法直接调用视频插件播放监控视频，但监控视频在html页面中通常是可以正常显示的，因此这里采用的办法是利用iframe使vue去加载html页面。
 
+  <iframe  ref="videoIframe" src="http://xxxxx.html" style="width: 700px;height: 535px;" scrolling="no"></iframe>
+  http://xxxxx.html 表示放在服务器上的那个有监控视频的html文件
+  
+  html内容
+  <body>
+    <video id="video-play" class="video-js vjs-default-skin vjs-big-play-centered" poster="" width="700" height="535" 
+         playsinline webkit-playsinline controls preload="auto" x-webkit-airplay="true"
+         controlsList="nodownload" oncontextmenu="return false">
+        <source id="source" src="http://xxxxx.m3u8" type="application/x-mpegURL" >
+    </video>
+  </body>
+  
+  http://xxxxx.m3u8表示视频格式为m3u8的监控(直播)地址
+  
+
 
