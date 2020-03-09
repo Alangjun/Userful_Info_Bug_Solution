@@ -1,0 +1,7 @@
+…Ë÷√tooltip
+tooltip:{
+          trigger: 'axis',
+          enterable: true,
+          confine: true,
+          extraCssText:'height:300px;overflow-y:auto',
+}
