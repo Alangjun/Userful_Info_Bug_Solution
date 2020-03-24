@@ -1,0 +1,7 @@
+vue中使用sass的配置方法
+
+
+参考链接: https://blog.csdn.net/lily2016n/article/details/75309492
+
+需要注意的是sass-loader版本太高的话webpack打包会报错,因此需要降低sass-loader的版本,项目中常用的sass-loader版本为 ^7.1.0
+参考: https://www.cnblogs.com/xulei1992/p/12101068.html11
