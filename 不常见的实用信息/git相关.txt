@@ -1,0 +1,6 @@
+
+
+
+git reset HEAD  -- <file>  拉取最近一次提交到版本库的文件到暂存区  改操作不影响工作区
+
+git checkout -- <file>     拉取暂存区文件 并将其替换成工作区文件(通常是在执行命令 git reset HEAD  -- <file>后执行)
