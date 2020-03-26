@@ -4,6 +4,7 @@
 git reset HEAD  -- <file>  拉取最近一次提交到版本库的文件到暂存区  改操作不影响工作区
 
 git checkout -- <file>     拉取暂存区文件 并将其替换成工作区文件(通常是在执行命令 git reset HEAD  -- <file>后执行)
+(git checkout -- <file>命令与git restore <file>命令作用一样)
 
 git commit   --amend        撤销上一次提交  并将暂存区文件重新提交（不常用）
 
