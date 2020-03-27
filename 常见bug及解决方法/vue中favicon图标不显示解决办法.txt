@@ -1,6 +1,9 @@
 favicon图标一般无法正确显示的原因
 1、favicon图标被打包到js或css文件中，所以无法正常显示
-2、favicon图标制作网址：http://www.bitbug.net/
+2、favicon图标制作网址：
+http://www.bitbug.net/
+https://tool.lu/favicon/
+
 
 正确配置如下
 1、将favicon放在static文件夹下
