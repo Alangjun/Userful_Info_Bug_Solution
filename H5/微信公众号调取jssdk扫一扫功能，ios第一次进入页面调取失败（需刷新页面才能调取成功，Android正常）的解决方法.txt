@@ -1,0 +1,39 @@
+参考链接:
+https://www.cnblogs.com/xueshanshan/p/8692092.html
+
+App.vue页面
+
+mounted(){
+
+    //  解决IOS端第一次调取微信扫一扫失败，需要刷新当前页面后才能成功端问题
+    let scanUrl = window.sessionStorage.getItem('scanUrl')
+    if(!scanUrl){
+      window.sessionStorage.setItem('scanUrl',location.href.split('#')[0])
+    }
+  },
+
+调取扫一扫的页面.vue
+
+获取签名
+
+let url =  /(Android)/i.test(navigator.userAgent) ? location.href.split('#')[0] : window.sessionStorage.getItem('scanUrl');
+      try {
+        let res = await this.$http.post('pay/signJsApi',{
+          url: url
+        })
+        if(res.data.result_code==0){
+          let signObj = res.data.data
+          wx.config({
+            debug: false, // 开启调试模式端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: signObj.appId, // 必填，公众号的唯一标识
+            timestamp: signObj.timestamp, // 必填，生成签名的时间戳
+            nonceStr: signObj.nonceStr, // 必填，生成签名的随机串
+            signature: signObj.signature,// 必填，签名
+            jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表
+          });
+        } else {
+          alert(JSON.stringify(res.data))
+        }
+      }catch(err){
+        alert(JSON.stringify(err))
+      }
