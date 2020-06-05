@@ -1,0 +1,55 @@
+option = {
+    xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    grid:{
+        left: 150
+    },
+      tooltip: {
+        trigger: 'axis'
+    },
+    yAxis:[
+            {
+                type: 'value',
+                name: '捕虫数',
+                position: 'left',
+                offset: 0
+            },
+            {
+                type: 'value',
+                name: '温度',
+                position: 'left',
+                offset: 50,
+                axisTick:{
+                    show: true
+                },
+                axisLabel:{
+                    show: true
+                }
+            },
+            {
+                type: 'value',
+                name: '湿度',
+                position: 'left',
+                offset: 100
+            },
+        ],
+    series: [
+        {
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line',
+            yAxisIndex: 0
+        },
+         {
+            data: [23, 56, 87, 20, 56, 98, 45],
+            type: 'line',
+              yAxisIndex: 1
+        },
+         {
+            data: [2, 5, 7, 10, 8, 9, 5],
+            type: 'line',
+            yAxisIndex: 2
+        },
+    ]
+};
