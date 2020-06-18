@@ -1,1 +1,8 @@
-微信h5页面浮窗后,sessionStorage的东西会被清掉,因此建议走微信h5页面里使用localStorage
+
+
+
+微信h5页面浮窗后,sessionStorage的东西会被清掉,因此建议在微信h5页面里使用localStorage
+
+
+
+
