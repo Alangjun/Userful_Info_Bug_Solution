@@ -1,0 +1,30 @@
+Vue组件懒加载,打包后的js文件名显示对应的组件名
+
+router文件
+
+原先引入方式:
+const filename = ()=> import('../components/filename.vue');
+
+
+现在的引入方式: 添加魔法注释/* webpackChunkName: 'filename' */
+const filename = ()=> import(/* webpackChunkName: 'filename' */'../components/filename.vue');
+
+Build文件夹下的webpack.prod.conf.js
+
+原先
+  output: {
+    path: config.build.assetsRoot,
+    filename: utils.assetsPath('js/[name].[chunkhash].js'),
+    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+  },
+
+
+现在
+  output: {
+    path: config.build.assetsRoot,
+    filename: utils.assetsPath('js/[name].[chunkhash].js'),
+    chunkFilename: utils.assetsPath('js/[name].[chunkhash].js')
+  },
+
+
+
