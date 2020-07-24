@@ -1,0 +1,19 @@
+Vue项目用webpack打包后显示文件名(魔法注释)
+Webpack.prod.conf.js文件
+1、修改 output
+output: {
+  path: config.build.assetsRoot,
+  filename: utils.assetsPath('js/[name].[chunkhash].js'),
+  chunkFilename: utils.assetsPath('js/[name].[chunkhash].js')
+},
+
+2、在路由或组件中找到懒加载组件的component
+{
+  path: 'home',
+  name: 'home',
+  component: ()=> import(/* webpackChunkName: 'home' */'../components/home.vue')
+},
+其中 /* webpackChunkName: 'home' */
+中的home即时打包后显示的文件名称（包含哈希值）
+
+
