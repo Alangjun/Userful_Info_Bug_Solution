@@ -1,0 +1,4 @@
+ window.history.pushState(null,'',location.href)
+ window.addEventListener("popstate", ()=> {
+   //执行相关操作
+ }, false);
