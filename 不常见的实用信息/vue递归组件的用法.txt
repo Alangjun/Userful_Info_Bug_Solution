@@ -1,0 +1,61 @@
+组件名
+treeCom.vue
+
+代码如下
+
+<template>
+<div class='treeCom'>
+  <div v-for="item in treeData" :key="item.label">
+    <div class="item-label" @click="labelClick(item)">{{item.label}}</div>
+    <div class="children-wrapper" v-if="item.children">
+      <el-collapse-transition>
+        <div v-show="currentName==item.label">
+          <tree-com :treeData="item.children"></tree-com>
+        </div>
+      </el-collapse-transition>
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
+export default {
+  name: 'treeCom',
+  props: {
+    treeData: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
+  },
+  data() {
+    return {
+      show: true,
+      currentName: ''
+    }
+  },
+  methods: {
+    labelClick(item){
+      if(this.currentName==item.label){
+        this.currentName = ''
+      } else {
+        this.currentName = item.label
+      }
+    },
+  }
+}
+</script>
+
+<style lang=scss>
+.treeCom {
+  .item-label{
+    padding-left: 30px;
+  }
+  .children-wrapper{
+    padding-left: 30px;
+  }
+}
+</style>
+
+
