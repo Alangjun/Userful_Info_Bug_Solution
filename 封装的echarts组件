@@ -1,14 +1,19 @@
 <template>
-  <div :id="id" class="echarts-element-class"></div>
+  <div :id="id" class="echarts-element-class">
+    <div style="display: none">{{optionUpdated}}</div><!-- 该行代码主要是使计算属性产生作用，进而执行optionChanged方法  -->
+  </div>
 </template>
 
 <script>
   import echarts from 'echarts/lib/echarts';
   import 'echarts/lib/chart/line'
   import 'echarts/lib/chart/pie'
+  import 'echarts/lib/chart/bar'
   import 'echarts/lib/component/tooltip'
   import 'echarts/lib/component/legend'
+  import 'echarts/lib/component/legendScroll'
   import 'echarts/lib/component/title'
+  import 'echarts/lib/component/dataZoom'
   export default {
     components:{echarts},
     props: {
@@ -22,11 +27,14 @@
       }
     },
     data(){
-     return{}
+      return{}
     },
-    watch:{
-      options(){ //监听父组件传来的option是否有变化
-        this.optionChanged(this.options)
+    computed:{
+      optionUpdated(){
+        this.$nextTick(()=>{
+          this.optionChanged(this.options)
+        })
+        return this.options
       }
     },
     methods:{
@@ -53,61 +61,8 @@
 </script>
 
 <style lang="scss">
-.echarts-element-class{
-  width: 100%;
-  height: 250px;
-  background-color: #fff;
-}
-</style>
-
-
-
-
-
-使用说明
-
-// 可自适应div宽度和高度
-
-
-//使用方式
-//父组件代码
-<template>
-  <div>
-    <echarts-com :options="fatherOptions" id="id1"></echarts-com>
-    <echarts-com :options="fatherOptions" id="id2"></echarts-com>
-    <div>
-      <el-button @click="changeIt">改变echarts</el-button>
-    </div>
-  </div>
-</template>
-<script>
-  import echartsCom from './echartComponent'
-  export default {
-    components:{echartsCom},
-    data() {
-      return {
-        fatherOptions:{}
-      }
-    },
-    methods: {
-      changeIt(){
-        this.fatherOptions = {
-          xAxis: {
-            type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-          },
-          yAxis: {
-            type: 'value'
-          },
-          series: [{
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line',
-          }]
-        }
-      }
-    }
+  .echarts-element-class{
+    width: 100%;
+    background-color: #fff;
   }
-</script>
-
-
-
+</style>
