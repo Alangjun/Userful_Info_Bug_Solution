@@ -1,0 +1,16 @@
+
+function* ajaxTest() {
+	console.log('started')
+	let res = yield getData()
+	console.log(res)
+	console.log('end')
+}
+
+function getData(){
+	setTimeout(()=>{
+		it.next('拿到数据了')
+	},3000)
+}
+
+var it = ajaxTest()
+it.next();
