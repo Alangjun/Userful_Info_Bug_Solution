@@ -1,0 +1,16 @@
+Vue项目中利用Axios下载文件实现有进度条，其实就是基于onDownloadProgress方法
+
+
+ try {
+        this.$http.get('接口',{
+          responseType: 'blob',
+          onDownloadProgress (progressEvent) {
+            console.log(progressEvent)
+          },
+        })
+
+      }catch (e) {
+        console.log(e)
+      }
+
+progressEvent包含下载的进度信息等
