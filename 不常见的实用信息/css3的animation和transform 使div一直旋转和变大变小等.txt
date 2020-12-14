@@ -1,0 +1,50 @@
+css 使div一直旋转和变大变小等(基于animation和transform)
+
+1、旋转
+<div id="loading">旋转起来</div>
+
+<style> 
+#loading{
+	width:100px;
+	height:100px;
+	line-height: 100px;
+	text-align: center;
+	border-radius: 50%;
+	background:red;
+	animation: rotating 2s linear infinite;
+}
+@keyframes rotating{
+	from{
+		transform: rotate(0deg);
+	}
+	to{
+		transform: rotate(360deg);
+	}
+}
+</style>
+
+2、变大变小
+<div id="scale">大小变起来</div>
+
+<style> 
+#scale{
+	width:100px;
+	height:100px;
+	line-height: 100px;
+	text-align: center;
+	border-radius: 50%;
+	background:red;
+	animation: scale 2s linear infinite;
+}
+@keyframes scale{
+	0%{
+		transform: scaleZ(1);
+	}
+	50%{
+		transform: scale(2);
+	}
+	100%{
+		transform: scale(1);
+	}
+}
+</style>
