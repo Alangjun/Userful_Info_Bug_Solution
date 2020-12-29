@@ -1,0 +1,59 @@
+<template>
+  <div class="hello">
+    <br><br>
+    <el-button>在可视区域吗</el-button>
+    <br><br><br>
+    <div v-for="item in arr" :key="item" style="border: 1px solid red;" class="view-box">
+      可视区域{{item}}
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+  </div>
+</template>
+
+<script>
+
+export default {
+  data () {
+    return {
+      arr: [1,2,3,4,5,6,7,8,9],
+    }
+  },
+  mounted(){
+    window.onscroll =  () => {
+      this.isElInViewport()
+    }
+  },
+  methods:{
+    isElInViewport(){
+      let arr = document.querySelectorAll('.view-box')
+      for (let item of arr){
+        let flag = this.isInViewport(item)
+        if(flag){
+          item.classList.add('animate')
+        }
+      }
+    },
+    isInViewport(el){
+      let rect = el.getBoundingClientRect();
+      return !(
+        rect.top >= (window.innerHeight || document.documentElement.clientHeight) ||
+        rect.bottom <= 0
+      );
+    },
+  },
+
+}
+</script>
+
+<style lang="scss">
+  .hello{
+    .view-box{
+      transition: all linear 0.7s;
+      transform: translateY(20px);
+      margin-bottom: 30px;
+      &.animate{
+        transform: translateY(0);
+      }
+    }
+  }
+</style>
