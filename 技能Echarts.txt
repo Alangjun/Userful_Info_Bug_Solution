@@ -1,0 +1,37 @@
+option = {
+    yAxis: {
+        type: 'category',
+        data: ['Vue全家桶', 'Jq/Bootstrap/js', 'H5页面', '小程序', 'Git', 'React', 'Java'].reverse(),
+        axisLine:{
+            show: false,
+        },
+        axisTick:{
+            show: false
+        },
+        axisLabel: {
+            color: 'rgba(0,0,0,1)',
+            fontSize: 16
+        }
+    },
+    xAxis: {
+        type: 'value',
+        show: false
+    },
+    grid:{
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 130
+    },
+    series: [{
+        data: [90, 90, 80, 75, 65, 55, 30].reverse(),
+        type: 'bar',
+        showBackground: true,
+        itemStyle:{
+            color: '#3a77c2'
+        },
+        backgroundStyle: {
+            color: 'rgba(180, 180, 180, 0.2)'
+        }
+    }]
+};
