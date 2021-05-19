@@ -1,2 +1,19 @@
-Mac配置本地服务器
-https://www.jianshu.com/p/c6ee75f2416b
+Mac配置本地服务器(https://www.jianshu.com/p/c6ee75f2416b)
+
+有时候为了测试方便，我们需要搭建一个临时服务器，Mac可以简单的实现，MacOS系统自带了Apache服务器。
+打开浏览器，访问http://127.0.0.1/或者http://localhost，如果没有开启服务，这时候会提示无法访问，如果看到的是It works!说明已经开启了Apache服务器。
+
+1. 开启服务器的命令
+//开启apache:  sudo apachectl start
+
+//重启apache:  sudo apachectl restart
+
+//关闭apache:  sudo apachectl stop
+
+2. 本地服务器的地址
+/Library/WebServer/Documents
+
+在Documents目录下放入girl.png，访问http://127.0.0.1/girl.png
+外网需要访问，查询ip命令ifconfig，把127.0.0.1换成你电脑的IP地址即可
+
+
