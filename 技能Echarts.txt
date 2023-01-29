@@ -1,7 +1,7 @@
 option = {
     yAxis: {
         type: 'category',
-        data: ['Vue全家桶', 'Jq/Bootstrap/js', 'H5页面', '小程序', 'Git', 'React', 'Java'].reverse(),
+        data: ['Vue全家桶', 'Jq/Bootstrap/js', 'H5页面','小程序','Java','SpringBoot','Mysql','MyBatis','Git', ].reverse(),
         axisLine:{
             show: false,
         },
@@ -24,14 +24,16 @@ option = {
         left: 130
     },
     series: [{
-        data: [90, 90, 80, 75, 65, 55, 30].reverse(),
+        data: [90, 90, 87,63, 65, 60, 55, 55, 75].reverse(),
         type: 'bar',
+        barMaxWidth: 40,
         showBackground: true,
         itemStyle:{
-            color: '#3a77c2'
+            color: '#3a77c2',
+            borderRadius: [0, 20, 20, 0]
         },
         backgroundStyle: {
-            color: 'rgba(180, 180, 180, 0.2)'
+            color: 'rgba(180, 180, 180, 0.3)'
         }
     }]
 };
